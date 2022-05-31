@@ -7,13 +7,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
 
-@RequiredArgsConstructor
-@Configuration
-public class WebConfig implements WebMvcConfigurer {
-    private final LoginUserArgumentResolver loginUserArgumentResolver;
-
-    @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        resolvers.add(loginUserArgumentResolver);
-    }
-}
+//@RequiredArgsConstructor
+//@Configuration
+//public class WebConfig implements WebMvcConfigurer {
+//    private final LoginUserArgumentResolver loginUserArgumentResolver;
+//
+//    @Override
+//    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+//        resolvers.add(loginUserArgumentResolver);
+//    }
+//}
