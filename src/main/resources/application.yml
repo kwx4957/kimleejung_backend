@@ -1,3 +1,11 @@
+# Swaager 3
+springdoc:
+  swagger-ui:
+    path: /swagger.html
+  api-docs:
+    path: /swaagger-docs
+  show-actuator: true
+
 spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
