@@ -14,17 +14,16 @@ configurations {
 	}
 }
 jar{
-	enabled=false
+	enabled=true
 }
 repositories {
 	mavenCentral()
 }
 
 dependencies {
-	//implementation 'com.amazonaws.serverless:aws-serverless-java-container-springboot2'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
+//	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	implementation 'org.springframework.boot:spring-boot-starter-mustache'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -38,4 +37,24 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+task('release'){
+	dependsOn("build")
+
+	doLast{
+		def stdout = new ByteArrayOutputStream()
+
+		exec {
+			commandLine 'eb', 'setenv', 'SPRING_PROFILES_ACTIVE=prod'
+			standardOutput = stdout
+		}
+		println "eb setenv Spring_profiles_active=prod :\n$stdout"
+		exec {
+			commandLine 'eb','deploy'
+			standardOutput = stdout
+		}
+		println "eb deploy :\n$stdout"
+		println "relase succe";
+	}
 }
