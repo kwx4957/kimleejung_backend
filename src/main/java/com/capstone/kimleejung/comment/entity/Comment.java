@@ -1,6 +1,7 @@
 package com.capstone.kimleejung.comment.entity;
 
 import com.capstone.kimleejung.board.entity.PostEntity;
+import com.capstone.kimleejung.config.BaseTimeEntity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -16,7 +17,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Table(name = "comment")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class Comment {
+public class Comment extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

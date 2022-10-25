@@ -1,5 +1,6 @@
 package com.capstone.kimleejung.enterprise.entity;
 
+import com.capstone.kimleejung.config.BaseTimeEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,7 +10,7 @@ import javax.persistence.*;
 @Table
 @NoArgsConstructor
 @Getter
-public class StockDivideInfo {
+public class StockDivideInfo extends BaseTimeEntity {
     // https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15043284
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

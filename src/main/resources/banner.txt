@@ -5,4 +5,4 @@ ${AnsiColor.BRIGHT_GREEN} U/| . \\u        | |       | |  | |   \| |/__   | |___
 ${AnsiColor.CYAN}   |_|\_\       U/| |\u     |_|  |_|    |_____|  |_____|   |_____|   \___/-(_/   <<\___/   |_| \_|      \____|
 ${AnsiColor.BLUE} ,-,>> \\,-. .-,_|___|_,-. <<,-,,-.     //  \\   <<   >>   <<   >>    _//       (__) )(    ||   \\,-.   _)(|_
 ${AnsiColor.BRIGHT_MAGENTA}  \.)   (_/   \_)-' '-(_/   (./  \.)   (_")("_) (__) (__) (__) (__)  (__)           (__)   (_")  (_/   (__)__)
- :: SpringBoot Version: ${spring-boot.version}::
+ :: SpringBoot Version:${spring-boot.version}::

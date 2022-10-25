@@ -1,6 +1,7 @@
 package com.capstone.kimleejung.board.entity;
 
 import com.capstone.kimleejung.comment.entity.Comment;
+import com.capstone.kimleejung.config.BaseTimeEntity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -19,7 +20,7 @@ import java.util.List;
 @Entity
 @Getter
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class PostEntity {
+public class PostEntity extends BaseTimeEntity {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String title;
