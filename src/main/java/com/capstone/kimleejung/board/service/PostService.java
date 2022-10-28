@@ -1,6 +1,5 @@
 package com.capstone.kimleejung.board.service;
 
-import com.capstone.kimleejung.board.controller.PostController;
 import com.capstone.kimleejung.board.entity.PostEntity;
 import com.capstone.kimleejung.board.model.PostDto;
 import com.capstone.kimleejung.board.repository.PostRepository;
