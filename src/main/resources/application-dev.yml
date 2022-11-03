@@ -15,7 +15,7 @@ spring:
 #            client-id : 1011036415264-bs070fpmajp5q1jba6pgr9pes3nugsga.apps.googleusercontent.com
 #            client-secret : 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
 #            scope : profile, email
-
+#
 #          naver :
 #            client-id : 0H728ryrx3j2qkJHWSZp
 #            client-secret : _yZfGPNNlI

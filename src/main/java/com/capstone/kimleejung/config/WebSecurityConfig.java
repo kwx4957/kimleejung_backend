@@ -5,7 +5,8 @@ import com.capstone.kimleejung.security.OAuthSuccessHandler;
 import com.capstone.kimleejung.security.OAuthUserServiceImpl;
 import com.capstone.kimleejung.security.RedirectUrlCookieFilter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.ConditionalOnDefaultWebSecurity;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -15,22 +16,24 @@ import org.springframework.security.web.authentication.Http403ForbiddenEntryPoin
 import org.springframework.web.filter.CorsFilter;
 
 @EnableWebSecurity
-@Slf4j
+@Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private JwtAuthenticationFilter jwtAuthenticationFilter;
+    public WebSecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter,
+                             OAuthUserServiceImpl oAuthUserService,
+                             OAuthSuccessHandler oAuthSuccessHandler,
+                             RedirectUrlCookieFilter redirectUrlFilter) {
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+        this.oAuthUserService = oAuthUserService;
+        this.oAuthSuccessHandler = oAuthSuccessHandler;
+        this.redirectUrlFilter = redirectUrlFilter;
+    }
 
-    @Autowired
-    private OAuthUserServiceImpl oAuthUserService;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final OAuthUserServiceImpl oAuthUserService;
+    private final OAuthSuccessHandler oAuthSuccessHandler; // Success Handler 추가
+    private final RedirectUrlCookieFilter redirectUrlFilter;
 
-    @Autowired
-    private OAuthSuccessHandler oAuthSuccessHandler; // Success Handler 추가
-
-    @Autowired
-    private RedirectUrlCookieFilter redirectUrlFilter;
-
-    @Override
     protected void configure(HttpSecurity http) throws Exception {
         // http 시큐리티 빌더
         http.cors()

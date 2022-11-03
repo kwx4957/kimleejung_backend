@@ -23,7 +23,9 @@ public class OAuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     private static final String LOCAL_REDIRECT_URL = "http://localhost:3000";
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
+    public void onAuthenticationSuccess(HttpServletRequest request,
+                                        HttpServletResponse response,
+                                        Authentication authentication) throws IOException {
         log.info("auth succeeded");
         TokenProvider tokenProvider = new TokenProvider();
         String token = tokenProvider.create(authentication);

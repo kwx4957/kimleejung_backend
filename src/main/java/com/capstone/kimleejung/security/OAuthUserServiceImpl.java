@@ -12,8 +12,6 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import java.sql.Wrapper;
-
 @Slf4j
 @Service
 public class OAuthUserServiceImpl extends DefaultOAuth2UserService {
@@ -54,6 +52,6 @@ public class OAuthUserServiceImpl extends DefaultOAuth2UserService {
 
         log.info("Successfully pulled user info username {}",username);
         // 변경 부분
-        return new ApplicationOAuth2User(String.valueOf(userEntity.getId()), oAuth2User.getAttributes());
+        return new ApplicationOAuth2User(userEntity.getId(), oAuth2User.getAttributes());
     }
 }

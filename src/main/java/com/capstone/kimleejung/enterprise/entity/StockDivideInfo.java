@@ -1,6 +1,8 @@
 package com.capstone.kimleejung.enterprise.entity;
 
 import com.capstone.kimleejung.config.BaseTimeEntity;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,26 +12,26 @@ import javax.persistence.*;
 @Table
 @NoArgsConstructor
 @Getter
+@Builder
+@AllArgsConstructor
 public class StockDivideInfo extends BaseTimeEntity {
-    // https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15043284
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private int basDt;
-    private int crno;
+    private Integer basDt;
+    private String crno;
     private String stckIssuCmpyNm;
-    private int dvdnBasDt;
-    private int cashDvdnPayDt;
-    private int stckHndvDt;
-    private int stckDvdnRcd;
+    private Integer dvdnBasDt;
+    private Integer cashDvdnPayDt;
+    private Integer stckHndvDt;
+    private Integer stckDvdnRcd;
     private String stckDvdnRcdNm;
-    private int stckGenrDvdnAmt;
-    private int stckGrdnDvdnAmt;
-    private int stckGenrCashDvdnRt;
-    private int stckGenrDvdnRt;
-    private int cashGrdnDvdnRt;
-    private int stckGrdnDvdnRt;
-    private int stckParPrc;
-    private int stckStacMd;
+    private Integer stckGenrDvdnAmt;
+    private Double stckGenrCashDvdnRt;
+    private Double stckGenrDvdnRt;
+    private Double cashGrdnDvdnRt;
+    private Integer stckGrdnDvdnRt;
+    private Integer stckParPrc;
+    private Integer stckStacMd;
 
 }

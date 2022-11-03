@@ -3,10 +3,7 @@ package com.capstone.kimleejung.comment.model;
 import com.capstone.kimleejung.board.entity.PostEntity;
 import com.capstone.kimleejung.comment.entity.Comment;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
-
-import javax.persistence.ManyToOne;
 
 @Getter
 @AllArgsConstructor

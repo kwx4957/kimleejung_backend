@@ -1,13 +1,9 @@
 package com.capstone.kimleejung.comment.controller;
 
-import com.capstone.kimleejung.comment.entity.Comment;
-import com.capstone.kimleejung.comment.model.CommentDto;
 import com.capstone.kimleejung.comment.repository.CommentRepository;
+import com.capstone.kimleejung.comment.model.CommentDto;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 public class CommentController {

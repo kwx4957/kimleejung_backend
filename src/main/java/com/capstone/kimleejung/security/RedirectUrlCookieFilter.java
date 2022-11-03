@@ -18,7 +18,9 @@ public class RedirectUrlCookieFilter extends OncePerRequestFilter {
     private static final int MAX_AGE = 180;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain) throws ServletException, IOException {
         if (request.getRequestURI().startsWith("/auth/authorize")) {
             try {
                 log.info("request uri {} ", request.getRequestURI());

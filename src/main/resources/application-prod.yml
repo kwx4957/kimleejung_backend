@@ -1,11 +1,3 @@
-# Swaager 3
-springdoc:
-  swagger-ui:
-    path: /swagger.html
-  api-docs:
-    path: /swaagger-docs
-  show-actuator: true
-
 # server port
 server:
   port: 5000
@@ -20,7 +12,7 @@ spring:
   jpa:
     database: mysql
     hibernate :
-      ddl-auto : create-drop
+      ddl-auto : update
     show-sql : true
     properties :
       hibernate :
