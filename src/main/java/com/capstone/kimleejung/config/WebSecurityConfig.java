@@ -4,12 +4,12 @@ import com.capstone.kimleejung.security.JwtAuthenticationFilter;
 import com.capstone.kimleejung.security.OAuthSuccessHandler;
 import com.capstone.kimleejung.security.OAuthUserServiceImpl;
 import com.capstone.kimleejung.security.RedirectUrlCookieFilter;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.security.ConditionalOnDefaultWebSecurity;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter;
 import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
@@ -31,17 +31,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final OAuthUserServiceImpl oAuthUserService;
-    private final OAuthSuccessHandler oAuthSuccessHandler; // Success Handler 추가
+    private final OAuthSuccessHandler oAuthSuccessHandler;
     private final RedirectUrlCookieFilter redirectUrlFilter;
 
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         // http 시큐리티 빌더
-        http.cors()
-                .and()
-                .csrf()
-                .disable()
-                .httpBasic()
-                .disable()
+        http.cors().and().csrf().disable()
+                .httpBasic().disable()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
@@ -73,5 +70,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 redirectUrlFilter,
                 OAuth2AuthorizationRequestRedirectFilter.class // 리디렉트가 되기 전에 필터를 실행해야 한다.
         );
-    }
+   }
 }

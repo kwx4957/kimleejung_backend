@@ -6,24 +6,13 @@ import com.capstone.kimleejung.enterprise.model.InterEnterpriseDto;
 import com.capstone.kimleejung.enterprise.repositoy.InterestedEnterpriseRepository;
 import com.capstone.kimleejung.enterprise.repositoy.StockDivideInfoRepository;
 import com.capstone.kimleejung.enterprise.service.EnterpriseService;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
