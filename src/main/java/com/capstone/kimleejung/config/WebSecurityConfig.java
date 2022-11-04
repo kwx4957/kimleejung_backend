@@ -6,6 +6,7 @@ import com.capstone.kimleejung.security.OAuthUserServiceImpl;
 import com.capstone.kimleejung.security.RedirectUrlCookieFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -43,13 +44,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .antMatchers("/", "/auth/**", "/oauth2/**").permitAll()
-                .anyRequest()
-                .authenticated()
+                .anyRequest().authenticated()
                 .and()
-                .oauth2Login()
-                .redirectionEndpoint()
-                .baseUri("/oauth2/callback/*")
+                    .oauth2Login()
+                    .redirectionEndpoint()
+                    .baseUri("/oauth2/callback/*")
                 .and()
                 .authorizationEndpoint()
                 .baseUri("/auth/authorize") // OAuth 2.0 흐름 시작을 위한 엔드포인트 추가

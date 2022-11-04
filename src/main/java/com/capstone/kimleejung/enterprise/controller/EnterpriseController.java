@@ -51,16 +51,21 @@ public class EnterpriseController {
         return ResponseEntity.noContent().build();
     }
 
-    // 최근 4개 데이터
     @GetMapping("/lastest") ///lastest?enterprise=삼성전자
     public List<StockDivideInfo> getLastestData(@RequestParam("enterprise") String enterprise){
-        List<StockDivideInfo> stockDivideInfos = stockDivideInfoRepository.findAllByStckIssuCmpyNm(enterprise);
-        return stockDivideInfos;
+        return stockDivideInfoRepository.findAllByStckIssuCmpyNm(enterprise);
     }
-    @GetMapping("/data/enterprise")
-    public void saveDataApi() throws IOException, ParseException {
-        enterpriseService.saveData();
+    @GetMapping("/data/enterprise/{kind}")
+    public void saveDataApi(@PathVariable("kind") String kind) throws IOException, ParseException {
+        if (kind.equals("diviInfo")){
+            enterpriseService.saveDiviInfo();
+        }else if(kind.equals("dividiscInfo")){
+            enterpriseService.saveDiviDiscInfo();
+        }else if(kind.equals("stockinfo")) {
+            enterpriseService.saveStockSecuritiesInfoService();
         }
+
+    }
 }
 
 
