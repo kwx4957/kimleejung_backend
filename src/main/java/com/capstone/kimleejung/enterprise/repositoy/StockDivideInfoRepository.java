@@ -9,4 +9,10 @@ import java.util.List;
 @Repository
 public interface StockDivideInfoRepository extends JpaRepository<StockDivideInfo,Long> {
     List<StockDivideInfo> findAllByStckIssuCmpyNm(String enterprise);
+
+    StockDivideInfo findTop1ByStckIssuCmpyNm(String enterprise);
+
+    StockDivideInfo findTop1ByStckIssuCmpyNmOrderByBasDtDesc(String enterprise);
+
+    StockDivideInfo findTop1ByStckIssuCmpyNmOrderByCashDvdnPayDtDesc(String enterprise);
 }

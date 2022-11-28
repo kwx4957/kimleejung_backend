@@ -1,7 +1,7 @@
 package com.capstone.kimleejung.security;
 
-import com.capstone.kimleejung.user.entity.User;
-import com.capstone.kimleejung.user.repository.UserRepository;
+import com.capstone.kimleejung.user.entity.UserKim;
+import com.capstone.kimleejung.user.repository.UserRepo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class OAuthUserServiceImpl extends DefaultOAuth2UserService {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserRepo userRepository;
 
     public OAuthUserServiceImpl() {
         super();
@@ -38,20 +38,20 @@ public class OAuthUserServiceImpl extends DefaultOAuth2UserService {
         // login 필드를 가져온다.
         final String username = (String) oAuth2User.getAttributes().get("login");
         final String authProvider = userRequest.getClientRegistration().getClientName();
-        User userEntity = null;
+        UserKim userKimEntity = null;
         // 유저가 존재하지 않으면 새로 생성한다.
         if(!userRepository.existsByUsername(username)) {
-            userEntity = User.builder()
+            userKimEntity = UserKim.builder()
                     .username(username)
                     .authProvider(authProvider)
                     .build();
-            userEntity = userRepository.save(userEntity);
+            userKimEntity = userRepository.save(userKimEntity);
         } else {
-            userEntity = userRepository.findByUsername(username);
+            userKimEntity = userRepository.findByUsername(username);
         }
 
         log.info("Successfully pulled user info username {}",username);
         // 변경 부분
-        return new ApplicationOAuth2User(userEntity.getId(), oAuth2User.getAttributes());
+        return new ApplicationOAuth2User(userKimEntity.getId(), oAuth2User.getAttributes());
     }
 }
