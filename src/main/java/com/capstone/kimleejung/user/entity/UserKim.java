@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Table(name = "User")
 @Builder
 @AllArgsConstructor
-public class User extends BaseTimeEntity {
+public class UserKim extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(generator="system-uuid")

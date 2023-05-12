@@ -19,5 +19,6 @@ public class StockSecuritiesInfo {
     private long id;
     private long basDt;
     private int clpr;
+    private String itmsNm;
 
 }

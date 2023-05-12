@@ -17,14 +17,15 @@ public class DiscInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    private Long crno;
     private Integer basDt;
-    private double bpvtrCashDvdnTndnCtt;
-    private int bpvtrOnskCashDvdnAmt;
-    private double bpvtrOnskCashDvdnBnfRt;
-    private double crtmCashDvdnTndnCtt;
-    private int crtmOnskCashDvdnAmt;
-    private double crtmOnskCashDvdnBnfRt;
-    private double pvtrCashDvdnTndnCtt;
-    private int pvtrOnskCashDvdnAmt;
-    private double pvtrOnskCashDvdnBnfRt;
+    private Double bpvtrCashDvdnTndnCtt;
+    private Integer bpvtrOnskCashDvdnAmt;
+    private Double bpvtrOnskCashDvdnBnfRt;
+    private Double crtmCashDvdnTndnCtt;
+    private Integer crtmOnskCashDvdnAmt;
+    private Double crtmOnskCashDvdnBnfRt;
+    private Double pvtrCashDvdnTndnCtt;
+    private Integer pvtrOnskCashDvdnAmt;
+    private Double pvtrOnskCashDvdnBnfRt;
 }

@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DiscInfoRepository extends JpaRepository<DiscInfo, Long> {
+    DiscInfo findTop1ByCrno(Long crno);
+
+    DiscInfo findTop1ByCrnoOrderByBasDtDesc(Long crno);
 }

@@ -1,7 +1,6 @@
 package com.capstone.kimleejung.enterprise.service;
 
 import com.capstone.kimleejung.enterprise.entity.DiscInfo;
-import com.capstone.kimleejung.enterprise.entity.Kospi;
 import com.capstone.kimleejung.enterprise.entity.StockDivideInfo;
 import com.capstone.kimleejung.enterprise.entity.StockSecuritiesInfo;
 import com.capstone.kimleejung.enterprise.repositoy.DiscInfoRepository;
@@ -21,6 +20,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -28,32 +28,34 @@ import java.util.Objects;
 @Service
 @Transactional
 public class EnterpriseService {
-
     private final StockDivideInfoRepository stockDivideInfoRepository;
     private final StockSecuritiesInfoRepository stockSecuritiesInfoRepository;
     private final DiscInfoRepository discInfoRepository;
-    public EnterpriseService(StockDivideInfoRepository stock,
-                             StockSecuritiesInfoRepository stockSecuritiesInfo,
+
+    public EnterpriseService(StockDivideInfoRepository stockDivideInfoRepository,
+                             StockSecuritiesInfoRepository stockSecuritiesInfoRepository,
                              DiscInfoRepository discInfoRepository) {
-        this.stockDivideInfoRepository = stock;
-        this.stockSecuritiesInfoRepository = stockSecuritiesInfo;
+        this.stockDivideInfoRepository = stockDivideInfoRepository;
+        this.stockSecuritiesInfoRepository = stockSecuritiesInfoRepository;
         this.discInfoRepository = discInfoRepository;
     }
-
     private String makeUrl(String company) throws UnsupportedEncodingException {
-        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1160100/service/GetStocDiviInfoService/getDiviInfo");
-        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + URLEncoder.encode("H8M+zTGzEGjkWijFKjq4wni6P6SKhzbEalrHnkrdexbFlgkuWgDMviKNbCN9tqt2I8tTF5dEedbjV3QMHIkqxA==","UTF-8"));
-        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8"));
-        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("1000", "UTF-8"));
-        urlBuilder.append("&" + URLEncoder.encode("resultType","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
-       // urlBuilder.append("&" + URLEncoder.encode("crno","UTF-8") + "=" + URLEncoder.encode("1101110057012", "UTF-8"));
-        urlBuilder.append("&" + URLEncoder.encode("stckIssuCmpyNm","UTF-8") + "=" + URLEncoder.encode(company, "UTF-8"));
-        return urlBuilder.toString();
+        String urlBuilder = "http://apis.data.go.kr/1160100/service/GetStocDiviInfoService/getDiviInfo" + "?" + URLEncoder.encode("serviceKey", StandardCharsets.UTF_8) + "=" + URLEncoder.encode("H8M+zTGzEGjkWijFKjq4wni6P6SKhzbEalrHnkrdexbFlgkuWgDMviKNbCN9tqt2I8tTF5dEedbjV3QMHIkqxA==", StandardCharsets.UTF_8) +
+                "&" + URLEncoder.encode("pageNo", StandardCharsets.UTF_8) + "=" + URLEncoder.encode("1", StandardCharsets.UTF_8) +
+                "&" + URLEncoder.encode("numOfRows", StandardCharsets.UTF_8) + "=" + URLEncoder.encode("1000", StandardCharsets.UTF_8) +
+                "&" + URLEncoder.encode("resultType", StandardCharsets.UTF_8) + "=" + URLEncoder.encode("json", StandardCharsets.UTF_8) +
+                // urlBuilder.append("&" + URLEncoder.encode("crno","UTF-8") + "=" + URLEncoder.encode("1101110057012", "UTF-8"));
+                "&" + URLEncoder.encode("stckIssuCmpyNm", StandardCharsets.UTF_8) + "=" + URLEncoder.encode(company, StandardCharsets.UTF_8);
+        return urlBuilder;
     }
 
     private Integer convert(Object s){
         return Objects.equals(s.toString(), "") ? 0 : Integer.parseInt(s.toString()) ;
     }
+    private Double convertDob(Object s){
+        return Objects.equals(s.toString(), "") ? 0 : Double.parseDouble(s.toString()) ;
+    }
+
 
     private String connectUrl(String makeurl) throws IOException {
         URL url = new URL(makeurl);
@@ -74,17 +76,16 @@ public class EnterpriseService {
         }
         rd.close();
         conn.disconnect();
-        System.out.println(sb.toString());
-
         return sb.toString();
     }
 
-    public void saveDiviInfo() throws IOException, ParseException {
+    public void saveDiviInfo(String company) throws IOException, ParseException {
         List<StockDivideInfo> stockDivideInfos = new ArrayList<>();
         JSONParser jsonParser = new org.json.simple.parser.JSONParser();
 
-        for(Kospi kospi: Kospi.values()){
-            String sb = connectUrl(makeUrl(kospi.toString()));
+//        for(Kospi kospi: Kospi.values()){
+//            String sb = connectUrl(makeUrl(kospi.toString()));
+            String sb = connectUrl(makeUrl(company));
 
         org.json.simple.JSONObject jsonObject = (org.json.simple.JSONObject) jsonParser.parse(sb);
         JSONObject array = (JSONObject) jsonObject.get("response");
@@ -92,8 +93,8 @@ public class EnterpriseService {
         JSONObject array2 = (JSONObject) array1.get("items");
         JSONArray array3 = (JSONArray) array2.get("item");
 
-        for(int i=0;i<array3.size();i++) {
-            JSONObject object = (JSONObject) array3.get(i);
+        for (Object o : array3) {
+            JSONObject object = (JSONObject) o;
             stockDivideInfos.add(
                     StockDivideInfo.builder().basDt(Integer.parseInt(object.get("basDt").toString()))
                             .crno(object.get("crno").toString())
@@ -112,15 +113,24 @@ public class EnterpriseService {
                             .stckStacMd(convert(object.get("stckStacMd")))
                             .build());
             stockDivideInfoRepository.saveAll(stockDivideInfos);
-            }
         }
+//        }
     }
-    public void saveDiviDiscInfo() throws IOException, ParseException {
+    public void saveDiviDiscInfo(String CRNO) throws IOException, ParseException {
         List<DiscInfo> stock = new ArrayList<>();
         JSONParser jsonParser = new org.json.simple.parser.JSONParser();
 
-        for(Kospi kospi: Kospi.values()) {
-            String sb = connectUrl(makeUrl(kospi.toString()));
+//        for(Kospi kospi: Kospi.values()) {
+//            String sb = connectUrl(makeUrl(kospi.toString()));
+
+        String urlBuilder = "http://apis.data.go.kr/1160100/service/GetDiscInfoService/getDiviDiscInfo" + "?" + URLEncoder.encode("serviceKey", StandardCharsets.UTF_8) + "=" + URLEncoder.encode("H8M+zTGzEGjkWijFKjq4wni6P6SKhzbEalrHnkrdexbFlgkuWgDMviKNbCN9tqt2I8tTF5dEedbjV3QMHIkqxA==", StandardCharsets.UTF_8) +
+                "&" + URLEncoder.encode("pageNo", StandardCharsets.UTF_8) + "=" + URLEncoder.encode("1", StandardCharsets.UTF_8) +
+                "&" + URLEncoder.encode("numOfRows", StandardCharsets.UTF_8) + "=" + URLEncoder.encode("1000", StandardCharsets.UTF_8) +
+                "&" + URLEncoder.encode("crno", StandardCharsets.UTF_8) + "=" + URLEncoder.encode(CRNO, StandardCharsets.UTF_8) +
+                "&" + URLEncoder.encode("resultType", StandardCharsets.UTF_8) + "=" + URLEncoder.encode("json", StandardCharsets.UTF_8);
+
+
+        String sb = connectUrl(urlBuilder);
 
             org.json.simple.JSONObject jsonObject = (org.json.simple.JSONObject) jsonParser.parse(sb);
             JSONObject array = (JSONObject) jsonObject.get("response");
@@ -128,38 +138,57 @@ public class EnterpriseService {
             JSONObject array2 = (JSONObject) array1.get("items");
             JSONArray array3 = (JSONArray) array2.get("item");
 
-            for(int i=0;i<array3.size();i++) {
-                JSONObject object = (JSONObject) array3.get(i);
-                stock.add(DiscInfo.builder().build());
-            }
+        for (Object o : array3) {
+            JSONObject object = (JSONObject) o;
+            stock.add(DiscInfo.builder()
+                    .crno(Long.valueOf(object.get("crno").toString()))
+                    .basDt(Integer.valueOf(object.get("basDt").toString()))
+                    .bpvtrCashDvdnTndnCtt(convertDob(object.get("bpvtrCashDvdnTndnCtt").toString()))
+                    .bpvtrOnskCashDvdnAmt(Integer.parseInt(object.get("bpvtrOnskCashDvdnAmt").toString()))
+                    .bpvtrOnskCashDvdnBnfRt(Double.parseDouble(object.get("bpvtrOnskCashDvdnBnfRt").toString()))
+                    .crtmCashDvdnTndnCtt(convertDob(object.get("crtmCashDvdnTndnCtt").toString()))
+                    .crtmOnskCashDvdnAmt(Integer.valueOf(object.get("crtmOnskCashDvdnAmt").toString()))
+                    .crtmOnskCashDvdnBnfRt(Double.parseDouble(object.get("crtmOnskCashDvdnBnfRt").toString()))
+                    .pvtrCashDvdnTndnCtt(convertDob((object.get("pvtrCashDvdnTndnCtt").toString())))
+                    .pvtrOnskCashDvdnAmt(Integer.valueOf(object.get("pvtrOnskCashDvdnAmt").toString()))
+                    .pvtrOnskCashDvdnBnfRt(Double.parseDouble(object.get("pvtrOnskCashDvdnBnfRt").toString()))
+                    .build());
 
-            //respo
         }
+            discInfoRepository.saveAll(stock);
+
     }
 
-    public void saveStockSecuritiesInfoService() throws IOException, ParseException {
+    public void saveStockSecuritiesInfoService(String company) throws IOException, ParseException {
         List<StockSecuritiesInfo> stock = new ArrayList<>();
         JSONParser jsonParser = new org.json.simple.parser.JSONParser();
 
-        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1160100/service/GetStocDiviInfoService/getDiviInfo");
-        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + URLEncoder.encode("H8M+zTGzEGjkWijFKjq4wni6P6SKhzbEalrHnkrdexbFlgkuWgDMviKNbCN9tqt2I8tTF5dEedbjV3QMHIkqxA==","UTF-8"));
-        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8"));
-        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("1795913", "UTF-8"));
-        urlBuilder.append("&" + URLEncoder.encode("resultType","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
+        String urlBuilder = "http://apis.data.go.kr/1160100/service/GetStockSecuritiesInfoService/getStockPriceInfo" +
+                "?" + URLEncoder.encode("serviceKey", StandardCharsets.UTF_8) + "=" + URLEncoder.encode("H8M+zTGzEGjkWijFKjq4wni6P6SKhzbEalrHnkrdexbFlgkuWgDMviKNbCN9tqt2I8tTF5dEedbjV3QMHIkqxA==", StandardCharsets.UTF_8) +
+                "&" + URLEncoder.encode("pageNo", StandardCharsets.UTF_8) + "=" + URLEncoder.encode("1", StandardCharsets.UTF_8) +
+                "&" + URLEncoder.encode("numOfRows", StandardCharsets.UTF_8) + "=" + URLEncoder.encode("1000", StandardCharsets.UTF_8) +
+                "&" + URLEncoder.encode("itmsNm", StandardCharsets.UTF_8) + "=" + URLEncoder.encode(company, StandardCharsets.UTF_8) +
+                "&" + URLEncoder.encode("resultType", StandardCharsets.UTF_8) + "=" + URLEncoder.encode("json", StandardCharsets.UTF_8);
 
-        org.json.simple.JSONObject jsonObject = (org.json.simple.JSONObject) jsonParser.parse(urlBuilder.toString());
+        System.out.println(urlBuilder.toString());
+        String sb = connectUrl(urlBuilder);
+        org.json.simple.JSONObject jsonObject = (org.json.simple.JSONObject) jsonParser.parse(sb);
         JSONObject array = (JSONObject) jsonObject.get("response");
         JSONObject array1 = (JSONObject) array.get("body");
         JSONObject array2 = (JSONObject) array1.get("items");
         JSONArray array3 = (JSONArray) array2.get("item");
 
-        for (int i = 0; i < array3.size(); i++) {
-            JSONObject object = (JSONObject) array3.get(i);
+        System.out.println(array3.toString());
+        for (Object o : array3) {
+            JSONObject object = (JSONObject) o;
             stock.add(StockSecuritiesInfo.builder()
                     .basDt(Long.parseLong(object.get("basDt").toString()))
                     .clpr(convert(object.get("clpr")))
+                    .itmsNm(object.get("itmsNm").toString())
                     .build());
-            }
+
+        }
         stockSecuritiesInfoRepository.saveAll(stock);
+
     }
 }
