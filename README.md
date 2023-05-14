@@ -8,6 +8,7 @@
 사용 기술 및 환경 : 
 - React, Js
 - SpringBoot, Java 11, Spring Security, Oauth2
+- MariaDB
 - AWS ElasticBeanstock
 
 ### 사용된 공공데이터
