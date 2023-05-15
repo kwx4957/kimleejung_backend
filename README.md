@@ -11,6 +11,12 @@
 - MariaDB
 - AWS ElasticBeanstock
 
+## 담당 업무
+- 공공데이터 호출 후 DB저장
+- AWS EB 구축
+- Kakao, naver, google Oauth2 로그인 구현
+- 기업 정보 API 구현
+
 ### 사용된 공공데이터
 1. https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15094808
 2. https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15043284
