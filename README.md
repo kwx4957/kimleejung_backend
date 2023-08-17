@@ -7,8 +7,7 @@
 인원 : 프론트 3명, 백엔드 2명  
 사용 기술 및 환경 : 
 - React, JavaScript
-- SpringBoot, Java 11, Spring Security, OAuth2
-- MariaDB
+- SpringBoot, Java 11, Spring Security, OAuth2, MariaDB
 - AWS ElasticBeanstock
 
 ## 담당 업무
