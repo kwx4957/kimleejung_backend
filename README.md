@@ -4,7 +4,7 @@
 
 ## 개발 환경
 기간 : 2022.10 ~ 2022.11  
-인원 : 프론트 3명, 백엔드 2명  
+인원 : 프론트 개발자 3명, 백엔드 개발자 2명  
 사용 기술 및 환경 : 
 - React, JavaScript
 - SpringBoot, Java 11, Spring Security, OAuth2, MariaDB
