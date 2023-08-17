@@ -8,11 +8,11 @@
 사용 기술 및 환경 : 
 - React, JavaScript
 - SpringBoot, Java 11, Spring Security, OAuth2, MariaDB
-- AWS ElasticBeanstock
+- AWS Elastic Beanstalk
 
 ## 담당 업무
 - 공공데이터 호출 후 DB저장
-- AWS ElasticBeanstock 구축
+- AWS Elastic Beanstalk 구축
 - Kakao, Naver, Google OAuth2 로그인 구현
 - CRUD API 구현
 
