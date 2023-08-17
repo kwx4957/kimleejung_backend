@@ -6,16 +6,16 @@
 기간 : 2022.10 ~ 2022.11  
 인원 : 프론트 3명, 백엔드 2명  
 사용 기술 및 환경 : 
-- React, Js
-- SpringBoot, Java 11, Spring Security, Oauth2
+- React, JavaScript
+- SpringBoot, Java 11, Spring Security, OAuth2
 - MariaDB
 - AWS ElasticBeanstock
 
 ## 담당 업무
 - 공공데이터 호출 후 DB저장
-- AWS EB 구축
-- Kakao, Naver, Google Oauth2 로그인 구현
-- 기업 정보 API 구현
+- AWS ElasticBeanstock 구축
+- Kakao, Naver, Google OAuth2 로그인 구현
+- CRUD API 구현
 
 ### 사용된 공공데이터
 1. https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15094808
@@ -37,5 +37,8 @@ Backend: https://github.com/kwx4957/kimleejung_backend
 ![](https://user-images.githubusercontent.com/33277725/237926135-cb342cb1-cf49-4364-b91d-abeda42646ec.png)
 
 ## 화면 설계
-![](https://user-images.githubusercontent.com/33277725/237926021-7ddbf7c5-d064-4f30-94da-7c75a291e185.PNG)|![](https://user-images.githubusercontent.com/33277725/237926026-5b6d23d3-ce80-479d-976d-cd82c2bd08d5.PNG)|![](https://user-images.githubusercontent.com/33277725/237926043-168fb07f-d2ac-4553-a3e8-6499319352d9.PNG)|![](https://user-images.githubusercontent.com/33277725/237926033-d5cac010-d450-4fb7-9f04-3ce4fd250b48.PNG)
----|---|---|---|
+![](https://user-images.githubusercontent.com/33277725/237926021-7ddbf7c5-d064-4f30-94da-7c75a291e185.PNG)|![](https://user-images.githubusercontent.com/33277725/237926026-5b6d23d3-ce80-479d-976d-cd82c2bd08d5.PNG)
+---|---|
+
+|![](https://user-images.githubusercontent.com/33277725/237926043-168fb07f-d2ac-4553-a3e8-6499319352d9.PNG)|![](https://user-images.githubusercontent.com/33277725/237926033-d5cac010-d450-4fb7-9f04-3ce4fd250b48.PNG)
+---|---|
